@@ -2,9 +2,10 @@
 
 require_once 'User.php';
 require_once 'Product.php';
+require_once 'Task.php';
 
-$user = new User('Margo', 'amv1102@mail.ru');
-var_dump($user);
+$user = new User('Margo', 'margo@mail.ru');
+/*var_dump($user);
 
 $user->setAge(250);
 var_dump($user->getAge());
@@ -20,7 +21,13 @@ $iPhone->setName('iPhone12');
 $iPhone->setPrice(80000);
 
 $user->getCart()->addProduct($iPhone, 2);
-print_r($user->getCart()->getProducts());
+print_r($user->getCart()->getProducts());*/
 
+$task = new Task($user);
+print_r($task);
 
+$task->setDescription('Описание задачи');
+print_r($task);
 
+$task->markAsDone();
+print_r($task);
