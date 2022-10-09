@@ -3,6 +3,7 @@
 require_once 'User.php';
 require_once 'Product.php';
 require_once 'Task.php';
+require_once 'TaskService.php';
 
 $user = new User('Margo', 'margo@mail.ru');
 /*var_dump($user);
@@ -30,4 +31,8 @@ $task->setDescription('Описание задачи');
 print_r($task);
 
 $task->markAsDone();
+print_r($task);
+
+TaskService::addComment($user, $task, 'Комментарий');
+TaskService::addComment($user, $task, 'Комментарий 2');
 print_r($task);

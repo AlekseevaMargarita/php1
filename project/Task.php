@@ -11,6 +11,7 @@ class Task
     private int $priority;
     private bool $isDone = false;
     private User $owner;
+    private array $comments = [];
 
     /**
      * @param User $owner
@@ -117,4 +118,21 @@ class Task
         $this->dateDone = new DateTime();
         $this->dateUpdated = new DateTime();
     }
+
+    /**
+     * @return array
+     */
+    public function getComments(): array
+    {
+        return $this->comments;
+    }
+
+    /**
+     * @param array $comment
+     */
+    public function setComments(Comment $comment): void
+    {
+        $this->comments[] = $comment;
+    }
+
 }
