@@ -2,17 +2,24 @@
 
 class Product
 {
-    private string $name = 'Product';
+    private string $title = 'Product';
     private float $price = 0.0;
+    private array $components = [];
 
-    public function getName(): string
+    public function __construct(string $title)
     {
-        return $this->name;
+        $this->title = $title;
     }
 
-    public function setName(string $name): void
+
+    public function getTitle(): string
     {
-        $this->name = $name;
+        return $this->title;
+    }
+
+    public function setTitle(string $title): void
+    {
+        $this->title = $title;
     }
 
     public function getPrice(): float
@@ -20,9 +27,33 @@ class Product
         return $this->price;
     }
 
+    private function setPriceBySum(): void
+    {
+        $sum = 0.0;
+        foreach ($this->components as $component) {
+            $sum += $component->getPrice();
+        }
+        $this->price = $sum;
+    }
+
     public function setPrice(float $price): void
     {
-        $this->price = $price;
+        if (count($this->components)) {
+            $this->setPriceBySum();
+        } else {
+            $this->price = $price;
+        }
+    }
+
+    public function getComponents(): array
+    {
+        return $this->components;
+    }
+
+    public function setComponents(Product $component): void
+    {
+        $this->components[] = $component;
+        $this->setPriceBySum();
     }
 
 }
