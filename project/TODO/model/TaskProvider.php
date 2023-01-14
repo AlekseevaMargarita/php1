@@ -4,11 +4,18 @@ require_once 'TaskTodo.php';
 
 class TaskProvider
 {
+    private array $tasks;
+
+    public function __construct()
+    {
+        //при создании хранилища читаем задачи из сессии
+        $this->tasks = $_SESSION['tasks'] ?? [];
+    }
+
     //метод для получения списка задач из сессии
     public function getTasksList(): array
     {
-        $_SESSION['tasks'] ? ($tasks = $_SESSION['tasks']) : ($tasks = []);
-        return $tasks;
+        return $this->tasks;
     }
     //метод для получения списа невыполненных задач
     public function getUndoneList(): array
