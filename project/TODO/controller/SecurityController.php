@@ -1,5 +1,4 @@
 <?php
-
 require_once 'model/UserProvider.php';
 $pdo = require 'db.php';
 
@@ -14,6 +13,11 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     die();
 }
 
+//страница доступна только для неавторизованных пользователей
+if (isset($_SESSION['user'])) {
+    header('Location:/');
+    die;
+}
 //авторизация по логину и паролю
 if (isset($_POST['username'], $_POST['password'])) {
     ['username' => $username, 'password' => $password] = $_POST;
