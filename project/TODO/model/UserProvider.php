@@ -1,5 +1,6 @@
 <?php
 require_once 'UserTodo.php';
+
 class UserProvider
 {
     //для работы с БД необходим PDO
@@ -16,16 +17,15 @@ class UserProvider
     {
         //подготовка запроса
         $statement = $this->pdo->prepare (
-            'INSERT INTO users (username, name, password) VALUES (:username, :name, :password)'
+            'INSERT INTO users (username, name, password, dateReg) VALUES (:username, :name, :password, :dateReg)'
         );
         //выполнение запроса с массивом аргументов
-        $result = $statement->execute([
+        return $statement->execute([
             'username' => $user->getUsername(),
             'name' => $user->getName(),
-            'password' => md5($plainPassword)
+            'password' => md5($plainPassword),
+            'dateReg' => $user->getDateReg()
         ]);
-        print_r($result);
-        return $result;
     }
 
     //получение пользователя из БД по логину и паролю, возвращается объект или null
@@ -33,7 +33,7 @@ class UserProvider
     {
         //подготовка запроса
         $statement = $this->pdo->prepare(
-            'SELECT id, username, name FROM users WHERE username = :username AND password = :password LIMIT 1'
+            'SELECT id, username, name, dateReg FROM users WHERE username = :username AND password = :password LIMIT 1'
         );
         //выполнение запроса с массивом аргументов,
         $statement->execute([

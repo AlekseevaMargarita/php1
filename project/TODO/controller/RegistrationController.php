@@ -26,6 +26,7 @@ if (isset($_POST['username'], $_POST['password'])) {
     $result = $userProvider->registerUser($user, $password);
 
     if ($result) {
+        $user->setId($pdo->lastInsertId());
         $_SESSION['user'] = $user;
         header('Location: /');
         die();
