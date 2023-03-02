@@ -40,8 +40,11 @@ class UserProvider
             'username' => $username,
             'password' => md5($password)
         ]);
-        //извлекает строку из объекта PDOStatement и возвращает в виде объекта, в массиве - аргументы для конструктора
-        return $statement->fetchObject(UserTodo::class, [$username]) ?: null;
+        //установить режим выборки по имени класса | вызвать конструктор до установки свойств, имя класса
+        $statement->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, UserTodo::class);
+
+        //получаем и возвращаем пользователя или null
+        return $statement->fetch() ?: null;
     }
 
 }
